@@ -412,6 +412,7 @@ ARG INSTALL_SWOOLE=false
 
 RUN set -eux; \
   if [ ${INSTALL_SWOOLE} = true ]; then \
+    apk add --no-cache brotli-dev; \
     # Install Php Swoole Extension
     if   [ $(php -r "echo PHP_VERSION_ID - PHP_RELEASE_VERSION;") = "50600" ]; then \
       pecl install swoole-2.0.10; \

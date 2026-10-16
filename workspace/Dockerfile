@@ -61,8 +61,13 @@ RUN set -xe; \
     apt-get update -yqq ${APT_GET_UPDATE_OPTIONS} && \
     pecl channel-update pecl.php.net && \
     if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ] && [ $(php -r "echo PHP_MINOR_VERSION;") != "0" ]; then \
-      groupmod --new-name laradock ubuntu; \
-      usermod --login laradock ubuntu --move-home --home /home/laradock; \
+      if getent passwd ubuntu >/dev/null 2>&1 && getent group ubuntu >/dev/null 2>&1; then \
+        groupmod --new-name laradock ubuntu; \
+        usermod --login laradock ubuntu --move-home --home /home/laradock; \
+      else \
+        groupadd -g ${PGID} laradock; \
+        useradd -l -u ${PUID} -g laradock -m laradock -G docker_env; \
+      fi; \
     else \
       groupadd -g ${PGID} laradock; \
       useradd -l -u ${PUID} -g laradock -m laradock -G docker_env; \
@@ -586,9 +591,12 @@ RUN if [ ${INSTALL_GEARMAN} = true ]; then \
 
 ARG INSTALL_PHPREDIS=false
 
-RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
+RUN if [ ${WORKSPACE_INSTALL_PHPREDIS} = true ]; then \
     apt-get update \
-    && apt-get install -yqq php${LARADOCK_PHP_VERSION}-redis \
+    && pecl install -o -f redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis \
+    # && apt-get install -yqq php${LARADOCK_PHP_VERSION}-redis \
 ;fi
 
 ###########################################################################

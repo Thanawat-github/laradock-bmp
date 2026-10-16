@@ -324,6 +324,7 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
 ARG INSTALL_SWOOLE=false
 RUN set -eux; \
     if [ ${INSTALL_SWOOLE} = true ]; then \
+      apt-get install -yqq libbrotli-dev; \
       # Install Php Swoole Extension
       if   [ $(php -r "echo PHP_VERSION_ID - PHP_RELEASE_VERSION;") = "50600" ]; then \
         pecl install swoole-2.0.10; \
