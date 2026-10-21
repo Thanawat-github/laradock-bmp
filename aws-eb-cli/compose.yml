@@ -1,7 +1,7 @@
 services:
 
     aws:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./aws-eb-cli
       volumes:

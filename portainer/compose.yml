@@ -1,7 +1,7 @@
 services:
 
     portainer:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./portainer
       volumes:

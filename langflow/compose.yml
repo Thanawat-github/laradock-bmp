@@ -1,7 +1,7 @@
 services:
 
     langflow:
-      restart: always
+      restart: unless-stopped
       image: langflowai/langflow:${LANGFLOW_VERSION}
       environment:
         - LANGFLOW_CONFIG_DIR=/app/langflow

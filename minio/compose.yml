@@ -1,7 +1,7 @@
 services:
 
     minio:
-      restart: always
+      restart: unless-stopped
       build: ./minio
       volumes:
         - ${DATA_PATH_HOST}/minio/data:/export

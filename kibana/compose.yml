@@ -1,7 +1,7 @@
 services:
 
     kibana:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./kibana
         args:

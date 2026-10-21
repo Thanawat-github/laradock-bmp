@@ -1,7 +1,7 @@
 services:
 
     workspace:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./workspace
         args:

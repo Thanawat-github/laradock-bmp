@@ -1,7 +1,7 @@
 services:
 
     laravel-reverb:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./laravel-reverb
         args:

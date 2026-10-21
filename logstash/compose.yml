@@ -1,7 +1,7 @@
 services:
 
     logstash:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./logstash
         args:

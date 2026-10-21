@@ -1,7 +1,7 @@
 services:
 
     dejavu:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./dejavu
       ports:

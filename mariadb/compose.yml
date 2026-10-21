@@ -1,7 +1,7 @@
 services:
 
     mariadb:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./mariadb
         args:

@@ -1,7 +1,7 @@
 services:
 
     flowise:
-      restart: always
+      restart: unless-stopped
       image: flowiseai/flowise:${FLOWISE_VERSION}
       volumes:
         - flowise:/root/.flowise

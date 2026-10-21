@@ -1,7 +1,7 @@
 services:
 
     sqs:
-      restart: always
+      restart: unless-stopped
       build: ./sqs
       ports:
         - "${SQS_NODE_HOST_PORT}:9324"

@@ -1,7 +1,7 @@
 services:
 
     solr:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./solr
         args:

@@ -1,7 +1,7 @@
 services:
 
     metabase:
-      restart: always
+      restart: unless-stopped
       image: metabase/metabase:latest
       environment:
         - MB_DB_FILE=/metabase-data/${METABASE_DB_FILE}

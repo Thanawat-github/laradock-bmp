@@ -1,7 +1,7 @@
 services:
 
     selenium:
-      restart: always
+      restart: unless-stopped
       build: ./selenium
       ports:
         - "${SELENIUM_PORT}:4444"

@@ -1,7 +1,7 @@
 services:
 
     openresty:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./openresty
         args:

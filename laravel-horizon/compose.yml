@@ -1,7 +1,7 @@
 services:
 
     laravel-horizon:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./laravel-horizon
         args:

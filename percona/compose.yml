@@ -1,7 +1,7 @@
 services:
 
     percona:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./percona
       environment:

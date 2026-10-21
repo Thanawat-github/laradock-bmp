@@ -1,7 +1,7 @@
 services:
 
     php-fpm:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./php-fpm
         args:

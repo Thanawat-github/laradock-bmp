@@ -1,7 +1,7 @@
 services:
 
     adminer:
-      restart: always
+      restart: unless-stopped
       build:
         context: ./adminer
         args:
