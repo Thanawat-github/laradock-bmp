@@ -616,11 +616,11 @@ RUN if [ ${INSTALL_GEARMAN} = true ]; then \
 
 ARG INSTALL_PHPREDIS=false
 
-RUN if [ ${WORKSPACE_INSTALL_PHPREDIS} = true ]; then \
+RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     apt-get update \
     && pecl install -o -f redis \
     && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis \
+    && echo "extension=redis.so" > /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/20-redis.ini \
     # && apt-get install -yqq php${LARADOCK_PHP_VERSION}-redis \
 ;fi
 

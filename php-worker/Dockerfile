@@ -630,6 +630,9 @@ RUN if [ ${INSTALL_INTL} = true ]; then \
     docker-php-ext-enable intl \
 ;fi
 
+RUN docker-php-ext-install exif && \
+    docker-php-ext-enable exif
+
 ############################################################################
 ## Event:
 ############################################################################
