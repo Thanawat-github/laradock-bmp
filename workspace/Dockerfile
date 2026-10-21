@@ -51,6 +51,14 @@ ENV PGID ${PGID}
 ARG WORKSPACE_ALLOW_RELEASE_INFO_CHANGE=false
 ENV WORKSPACE_ALLOW_RELEASE_INFO_CHANGE ${WORKSPACE_ALLOW_RELEASE_INFO_CHANGE}
 
+# Some pecl.php.net CDN edges (e.g. BunnyCDN Thailand) answer HTTP/1.1 with `Transfer-Encoding: chunked`,
+# which PEAR's built-in HTTP client cannot decode ("XML Error: Not well-formed" on channel-update/install).
+# Make PEAR speak HTTP/1.0 so responses are never chunked.
+RUN for PEAR_FILE in REST Downloader; do \
+      PEAR_PATH="$(php -r "echo stream_resolve_include_path('PEAR/${PEAR_FILE}.php');")"; \
+      sed -i 's#HTTP/1\.1\\r\\n#HTTP/1.0\\r\\n#g' "$PEAR_PATH"; \
+    done
+
 # pecl.php.net downloads intermittently truncate on CI (Fastly/HTTP flakiness), breaking
 # `pecl install` with "unable to unpack". Wrap pecl once so every install retries after clearing
 # the partial-download cache; all pecl call sites below become resilient with no other changes.
