@@ -24,4 +24,7 @@ RUN for i in 1 2 3 4 5; do \
     done; \
     exit 1
 
+# OPcache/JIT tuning for the Octane worker, see php.ini.
+COPY ./php.ini /usr/local/etc/php/conf.d/zz-app.ini
+
 WORKDIR /app

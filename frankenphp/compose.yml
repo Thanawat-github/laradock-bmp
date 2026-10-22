@@ -5,8 +5,10 @@ services:
         context: ./frankenphp
         args:
           - FRANKENPHP_VERSION=${FRANKENPHP_VERSION}
+      # Same code path as workspace/php-fpm so caches built in any container (artisan optimize) stay valid.
+      working_dir: ${APP_CODE_PATH_CONTAINER}
       volumes:
-        - ${APP_CODE_PATH_HOST}:/app${APP_CODE_CONTAINER_FLAG}
+        - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       ports:
         - "${FRANKENPHP_HTTP_PORT}:80"
         - "${FRANKENPHP_HTTPS_PORT}:443"
@@ -16,3 +18,14 @@ services:
         - backend
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
+      entrypoint:
+        - php
+        - artisan
+        - octane:frankenphp
+        - --host=localhost
+        - --port=443
+        - --https
+        - --http-redirect
+        # - --watch
+        # Octane logs every request at INFO in the local environment.
+        - --log-level=WARN
